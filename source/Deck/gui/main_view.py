@@ -1,9 +1,11 @@
-from PyQt6.QtWidgets import QWidget, QMainWindow
+from PyQt6.QtWidgets import QWidget, QMainWindow, QStackedWidget
 from PyQt6.QtCore import QSize, Qt
 import sys
 import os
+from .login_view import LoginView
+from .player_view import PlayerView
 
-class SpotifyDeck(QMainWindow):
+class MainView(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -11,6 +13,12 @@ class SpotifyDeck(QMainWindow):
         self.setFixedSize(QSize(320,460))
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
 
+        self.stacked_widgets = QStackedWidget()
+        self.login_view = LoginView()
+        self.stacked_widgets.addWidget(self.login_view)
+
+        self.setCentralWidget(self.stacked_widgets)
+        
     # Handle Drags
     def mousePressEvent(self, event):
         self.old_pos = event.globalPosition().toPoint()
