@@ -1,0 +1,3 @@
+python-dotenv
+PyQt6
+requests
