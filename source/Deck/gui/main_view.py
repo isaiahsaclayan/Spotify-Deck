@@ -22,6 +22,8 @@ class MainView(QMainWindow):
 
         self.setCentralWidget(self.stacked_widgets)
         
+        self.login_view.login_successful.connect(self.switch_player_view)
+        
     # Handle Drags
     def mousePressEvent(self, event):
         self.old_pos = event.globalPosition().toPoint()
