@@ -20,7 +20,7 @@ class LoginView(QWidget):
         layout.addWidget(self.login_button)
 
         self.setLayout(layout)
-
+        
         # Create a timer to check for login status
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.check_login_status)
