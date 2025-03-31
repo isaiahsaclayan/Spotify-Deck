@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 def store_access_token(token):
     """Save the access token in .env"""
-    set_key(ENV_FILE, "SPOTIFY_ACCESS_TOKEN", token)
+    set_key(ENV_FILE, "ACCESS_TOKEN", token)
 
 @app.route("/login")
 def login():
