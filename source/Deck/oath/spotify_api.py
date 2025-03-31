@@ -9,16 +9,15 @@ from PyQt6.QtGui import QDesktopServices
 # Spotify credentials
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
+REDIRECT_URI = os.environ.get("REDIRECT_URI")
 
 # Spotify API
-REDIRECT_URI = 'http://127.0.0.1:8000/callback'
 AUTH_URL = 'https://accounts.spotify.com/authorize'
-TOKEN_URL = 'https://accounts.spotify.com/api/token'
-SCOPE = 'user-library-read user-read-playback-state user-modify-playback-state'
+API_BASE_URL = 'https://api.spotify.com/v1'
 
 # Variables for storing tokens
 ACCESS_TOKEN = None
 REFRESH_TOKEN = None
 
 def start_oath_flow():
-    pass
+    """Redirect user to Spotify Login web page"""
