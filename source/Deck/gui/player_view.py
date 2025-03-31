@@ -1,15 +1,20 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
+from PyQt6.QtCore import QTimer
 import requests
 import os
 from dotenv import load_dotenv
+from spotify_api import SpotifyAPI
 
 class PlayerView(QWidget):
     def __init__(self):
         super().__init__()
+        
+        self.sp = SpotifyAPI()
+        
         self.setWindowTitle("Spotify Player")
 
         load_dotenv()
-        self.access_token = os.getenv("SPOTIFY_ACCESS_TOKEN")
+        self.access_token = os.getenv("ACCESS_TOKEN")
 
         layout = QVBoxLayout()
 
@@ -17,34 +22,26 @@ class PlayerView(QWidget):
         layout.addWidget(self.track_label)
 
         self.play_button = QPushButton("Play")
-        self.play_button.clicked.connect(self.play_song)
+        self.play_button.clicked.connect(self.sp.play)
         layout.addWidget(self.play_button)
 
         self.pause_button = QPushButton("Pause")
-        self.pause_button.clicked.connect(self.pause_song)
+        self.pause_button.clicked.connect(self.sp.pause)
         layout.addWidget(self.pause_button)
 
         self.setLayout(layout)
 
-        self.update_song_info()
+        # Configure Timer and Start
+        self.song_timer = QTimer(self)
+        self.song_timer.timeout.connect(self.update_song_info)
+        self.song_timer.start(1000)
+        
+        # Configure Refresh Token Timer
+        self.token_timer = QTimer(self)
+        self.token_timer.timeout.connect(self.sp.refresh_token)
+        self.token_timer.start(300000)  # 5 minutes
 
     def update_song_info(self):
-        """Fetches the currently playing song"""
-        headers = {"Authorization": f"Bearer {self.access_token}"}
-        response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers=headers)
-        
-        if response.status_code == 200:
-            data = response.json()
-            track_name = data["item"]["name"]
-            artist_name = data["item"]["artists"][0]["name"]
-            self.track_label.setText(f"Now Playing: {track_name} - {artist_name}")
+        artist_name, track_name, album_cover = self.sp.get_current_song()
+        self.track_label.setText(f"{track_name} - {artist_name}")
 
-    def play_song(self):
-        """Send play request to Spotify"""
-        headers = {"Authorization": f"Bearer {self.access_token}"}
-        requests.put("https://api.spotify.com/v1/me/player/play", headers=headers)
-
-    def pause_song(self):
-        """Send pause request to Spotify"""
-        headers = {"Authorization": f"Bearer {self.access_token}"}
-        requests.put("https://api.spotify.com/v1/me/player/pause", headers=headers)

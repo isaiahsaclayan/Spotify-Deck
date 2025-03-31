@@ -9,11 +9,11 @@ class SpotifyAPI:
     BASE_URL = "https://api.spotify.com/v1/me/player"
 
     def __init__(self):
-        self.access_token = os.getenv("SPOTIFY_ACCESS_TOKEN")
+        self.access_token = os.getenv("ACCESS_TOKEN")
 
     def refresh_token(self):
         """Refresh the access token if needed."""
-        self.access_token = os.getenv("SPOTIFY_ACCESS_TOKEN")
+        self.access_token = os.getenv("ACCESS_TOKEN")
 
     def get_current_song(self):
         """Fetch the currently playing song."""
@@ -24,7 +24,8 @@ class SpotifyAPI:
             data = response.json()
             track_name = data["item"]["name"]
             artist_name = data["item"]["artists"][0]["name"]
-            return f"{track_name} - {artist_name}"
+            album_cover = data["item"]["album"]["images"][0]["url"]
+            return track_name, artist_name, album_cover
         return "No song playing"
 
     def play(self):
