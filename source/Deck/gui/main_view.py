@@ -15,7 +15,10 @@ class MainView(QMainWindow):
 
         self.stacked_widgets = QStackedWidget()
         self.login_view = LoginView()
+        self.player_view = PlayerView()
+        
         self.stacked_widgets.addWidget(self.login_view)
+        self.stacked_widgets.addWidget(self.player_view)
 
         self.setCentralWidget(self.stacked_widgets)
         
@@ -28,4 +31,7 @@ class MainView(QMainWindow):
             delta = event.globalPosition().toPoint() - self.old_pos
             self.move(self.x() + delta.x(), self.y() + delta.y())
             self.old_pos = event.globalPosition().toPoint()
+
+    def switch_player_view(self):
+        self.stacked_widgets.setCurrentIndex(1)
 
