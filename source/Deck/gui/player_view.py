@@ -43,5 +43,6 @@ class PlayerView(QWidget):
 
     def update_song_info(self):
         artist_name, track_name, album_cover = self.sp.get_current_song()
+        print(album_cover)
         self.track_label.setText(f"{track_name} - {artist_name}")
 
