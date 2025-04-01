@@ -58,6 +58,8 @@ class PlayerView(QWidget):
 
     def update_song_info(self):
         track_name, artist_name, album_cover = self.sp.get_current_song()
-        self.album_cover.setPixmap(album_cover)
-        self.artist.setText(artist_name)
-        self.title.setText(track_name)
+        if album_cover:
+            self.album_cover.setPixmap(album_cover)
+        if track_name and artist_name:
+            self.artist.setText(artist_name)
+            self.title.setText(track_name)
