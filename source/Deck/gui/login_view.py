@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QLabel
 from PyQt6.QtCore import QTimer, pyqtSignal, Qt
+from PyQt6.QtGui import QFont
 import requests
 import webbrowser
 
@@ -12,7 +13,9 @@ class LoginView(QWidget):
         
         layout = QVBoxLayout()
 
-        self.label = QLabel("Please log in to Spotify.", alignment=Qt.AlignmentFlag.AlignCenter)
+        self.label = QLabel("Please log in to Spotify.",
+                            alignment=Qt.AlignmentFlag.AlignCenter,
+                            font=QFont("Arial", 15, weight=QFont.Weight.Bold))
         layout.addWidget(self.label)
 
         self.login_button = QPushButton("Login")
