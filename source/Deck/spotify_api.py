@@ -13,6 +13,7 @@ class SpotifyAPI:
 
     def refresh_token(self):
         """Refresh the access token if needed."""
+        requests.get("http://localhost:8888/callback")
         self.access_token = os.getenv("ACCESS_TOKEN")
 
     def get_current_song(self):
@@ -26,6 +27,12 @@ class SpotifyAPI:
             artist_name = data["item"]["artists"][0]["name"]
             album_cover = data["item"]["album"]["images"][0]["url"]
             return track_name, artist_name, album_cover
+        elif response.status_code == 401 and response.json():
+            self.refresh_token()
+            print(response)
+            return None, None, None
+        else:
+            print(response)
         return "No song playing"
 
     def play(self):
