@@ -17,6 +17,9 @@ class PlayerView(QWidget):
         self.access_token = os.getenv("ACCESS_TOKEN")
 
         layout = QVBoxLayout()
+        
+        self.album_cover = QLabel()
+        layout.addWidget(self.album_cover)
 
         self.track_label = QLabel("No song playing")
         layout.addWidget(self.track_label)
@@ -43,6 +46,6 @@ class PlayerView(QWidget):
 
     def update_song_info(self):
         artist_name, track_name, album_cover = self.sp.get_current_song()
-        print(album_cover)
         self.track_label.setText(f"{track_name} - {artist_name}")
+        self.album_cover = album_cover
 
