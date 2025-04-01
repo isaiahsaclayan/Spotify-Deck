@@ -10,8 +10,10 @@ class MainView(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("SpotiDeck")
-        self.setFixedSize(QSize(320,460))
+        
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        
+        self.setFixedSize(QSize(300, 150))
 
         self.stacked_widgets = QStackedWidget()
         self.login_view = LoginView()
@@ -36,4 +38,5 @@ class MainView(QMainWindow):
 
     def switch_player_view(self):
         self.stacked_widgets.setCurrentIndex(1)
+        self.setFixedSize(QSize(320, 460))
 

@@ -1,5 +1,6 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton
-from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton 
+from PyQt6.QtCore import QTimer, Qt, QSize
+from PyQt6.QtGui import QFont
 import requests
 import os
 from dotenv import load_dotenv
@@ -12,17 +13,28 @@ class PlayerView(QWidget):
         self.sp = SpotifyAPI()
         
         self.setWindowTitle("Spotify Player")
+        self.setFixedSize(QSize(320,460))
 
         load_dotenv()
         self.access_token = os.getenv("ACCESS_TOKEN")
 
         layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         
         self.album_cover = QLabel()
-        layout.addWidget(self.album_cover)
+        layout.addWidget(self.album_cover,
+                         alignment=Qt.AlignmentFlag.AlignCenter)
 
-        self.track_label = QLabel("No song playing")
-        layout.addWidget(self.track_label)
+        self.title = QLabel("No song playing",
+                            alignment=Qt.AlignmentFlag.AlignCenter,
+                            font=QFont("Ink Free", 20, weight=QFont.Weight.Bold))
+        layout.addWidget(self.title)
+        
+        self.artist = QLabel("None",
+                             alignment=Qt.AlignmentFlag.AlignCenter,
+                             font=QFont("Ink Free", 10))
+        self.artist.setStyleSheet("color: gray;")
+        layout.addWidget(self.artist)
 
         self.play_button = QPushButton("Play")
         self.play_button.clicked.connect(self.sp.play)
@@ -45,7 +57,7 @@ class PlayerView(QWidget):
         self.token_timer.start(300000)  # 5 minutes
 
     def update_song_info(self):
-        artist_name, track_name, album_cover = self.sp.get_current_song()
-        self.track_label.setText(f"{track_name} - {artist_name}")
-        self.album_cover = album_cover
-
+        track_name, artist_name, album_cover = self.sp.get_current_song()
+        self.album_cover.setPixmap(album_cover)
+        self.artist.setText(artist_name)
+        self.title.setText(track_name)
