@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton 
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout
 from PyQt6.QtCore import QTimer, Qt, QSize
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QIcon
 import requests
 import os
 from dotenv import load_dotenv
