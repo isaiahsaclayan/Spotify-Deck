@@ -54,18 +54,27 @@ class SpotifyAPI:
 
     def play(self):
         """Send play request to Spotify."""
+        #https://developer.spotify.com/documentation/web-api/reference/start-a-users-playback
         headers = {"Authorization": f"Bearer {self.access_token}"}
         requests.put(f"{self.BASE_URL}/play", headers=headers)
 
     def pause(self):
         """Send pause request to Spotify."""
+        #https://developer.spotify.com/documentation/web-api/reference/pause-a-users-playback
         headers = {"Authorization": f"Bearer {self.access_token}"}
         requests.put(f"{self.BASE_URL}/pause", headers=headers)
         
     def skip(self):
         """Send skip request to Spotify."""
+        #https://developer.spotify.com/documentation/web-api/reference/skip-users-playback-to-next-track
         headers = {"Authorization": f"Bearer {self.access_token}"}
         requests.post(f"{self.BASE_URL}/next", headers=headers)
+    
+    def previous(self):
+        """Send previous track request to Spotify."""
+        #https://developer.spotify.com/documentation/web-api/reference/skip-users-playback-to-previous-track
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+        requests.post(f"{self.BASE_URL}/previous", headers=headers)
         
     def get_playback_state(self):
         """Fetch the current playback state."""
