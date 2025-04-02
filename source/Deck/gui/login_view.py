@@ -15,11 +15,29 @@ class LoginView(QWidget):
 
         self.label = QLabel("Please log in to Spotify.",
                             alignment=Qt.AlignmentFlag.AlignCenter,
-                            font=QFont("Arial", 15, weight=QFont.Weight.Bold))
+                            font=QFont("Segoe UI Variable", 15, weight=QFont.Weight.Bold))
+        self.label.setStyleSheet("color: black;")
         layout.addWidget(self.label)
 
         self.login_button = QPushButton("Login")
         self.login_button.clicked.connect(self.start_login)
+        self.login_button.setStyleSheet("""
+            QPushButton {
+                background-color: lightgray;
+                color: black;
+                border-radius: 5px;
+                padding: 8px;
+                font-family: 'Segoe UI Variable';
+                font-size: 10px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: darkgray;
+            }
+            QPushButton:pressed {
+                background-color: gray;
+            }
+        """)
         layout.addWidget(self.login_button)
 
         self.setLayout(layout)

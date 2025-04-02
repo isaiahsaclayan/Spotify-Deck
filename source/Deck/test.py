@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QApplication, QListWidget, QVBoxLayout, QWidget
-from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtGui import QFontDatabase, QFont
 import sys
 
 class FontListApp(QWidget):
@@ -20,7 +20,9 @@ class FontListApp(QWidget):
 
     def loadFonts(self):
         fonts = QFontDatabase.families()
-        self.fontListWidget.addItems(fonts)
+        for font in fonts:
+            item = self.fontListWidget.addItem(font)
+            self.fontListWidget.item(self.fontListWidget.count() - 1).setFont(QFont(font))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

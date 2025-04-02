@@ -14,6 +14,7 @@ class MainView(QMainWindow):
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         
         self.setFixedSize(QSize(300, 150))
+        self.setStyleSheet("background-color: white;")
 
         self.stacked_widgets = QStackedWidget()
         self.login_view = LoginView()

@@ -27,21 +27,25 @@ class PlayerView(QWidget):
 
         self.title = QLabel("No song playing",
                             alignment=Qt.AlignmentFlag.AlignCenter,
-                            font=QFont("Ink Free", 20, weight=QFont.Weight.Bold))
+                            font=QFont("Segoe UI Variable", 20, weight=QFont.Weight.Bold))
+        self.title.setStyleSheet("color: black;")
+        self.title.setWordWrap(True)
         layout.addWidget(self.title)
         
         self.artist = QLabel("None",
                              alignment=Qt.AlignmentFlag.AlignCenter,
-                             font=QFont("Ink Free", 10))
+                             font=QFont("Segoe UI Variable", 15))
         self.artist.setStyleSheet("color: gray;")
         layout.addWidget(self.artist)
 
         self.play_button = QPushButton("Play")
         self.play_button.clicked.connect(self.sp.play)
+        self.play_button.setStyleSheet("color: gray;")
         layout.addWidget(self.play_button)
 
         self.pause_button = QPushButton("Pause")
         self.pause_button.clicked.connect(self.sp.pause)
+        self.pause_button.setStyleSheet("color: gray;")
         layout.addWidget(self.pause_button)
 
         self.setLayout(layout)
