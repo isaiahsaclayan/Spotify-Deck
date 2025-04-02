@@ -78,6 +78,7 @@ class SpotifyAPI:
         
     def get_playback_state(self):
         """Fetch the current playback state."""
+        #https://developer.spotify.com/documentation/web-api/reference/get-information-about-the-users-current-playback
         headers = {"Authorization": f"Bearer {self.access_token}"}
         response = requests.get(f"{self.BASE_URL}", headers=headers)
         
@@ -90,3 +91,14 @@ class SpotifyAPI:
             print(response)
             
         return False
+    
+    def get_progress(self):
+        """Fetch the current playback progress."""
+        #https://developer.spotify.com/documentation/web-api/reference/get-information-about-the-users-current-playback
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+        response = requests.post(f"{self.BASE_URL}", headers=headers)
+        
+        if response.status_code == 200:
+            data = response.json()
+            return data["progress_ms"]
+

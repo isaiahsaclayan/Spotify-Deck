@@ -18,8 +18,6 @@ class PlayerView(QWidget):
         load_dotenv()
         self.access_token = os.getenv("ACCESS_TOKEN")
         
-        self.is_playing = True
-
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         
@@ -94,16 +92,18 @@ class PlayerView(QWidget):
             if album_cover:
                 self.album_cover.setPixmap(album_cover)
                 
+        print(self.sp.get_progress())
+                
         if self.sp.get_playback_state():
             self.play_pause_button.setIcon(QIcon("assets/pause-button.png"))
         else:
             self.play_pause_button.setIcon(QIcon("assets/play-button.png"))
     
     def toggle_playback(self):
-        is_playing = self.sp.get_playback_state()
-        if is_playing:
+        if self.sp.get_playback_state():
             self.play_pause_button.setIcon(QIcon("assets/pause-button.png"))
             self.sp.pause()
         else:
-            self.play_pause_button.setIcon(QIcon("assets/play-button.png"))
+            self.play_pause_button.setIcon(QIcon("assets/pause-button.png"))
             self.sp.play()
+            
