@@ -51,7 +51,7 @@ class PlayerView(QWidget):
         self.back_button.setIcon(QIcon("assets/back-track.png"))
         self.back_button.setIconSize(QSize(40,40))
         self.back_button.setStyleSheet("border: none;")
-        self.back_button.clicked.connect(self.sp.pause)
+        self.back_button.clicked.connect(self.sp.previous)
         control_layout.addWidget(self.back_button)
 
         # Pause/Play Button
@@ -91,9 +91,7 @@ class PlayerView(QWidget):
             self.title.setText(track_name)
             if album_cover:
                 self.album_cover.setPixmap(album_cover)
-                
-        print(self.sp.get_progress())
-                
+                                
         if self.sp.get_playback_state():
             self.play_pause_button.setIcon(QIcon("assets/pause-button.png"))
         else:
