@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton 
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout
 from PyQt6.QtCore import QTimer, Qt, QSize
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QIcon
 import requests
 import os
 from dotenv import load_dotenv
@@ -35,15 +35,17 @@ class PlayerView(QWidget):
                              font=QFont("Ink Free", 10))
         self.artist.setStyleSheet("color: gray;")
         layout.addWidget(self.artist)
+        
+        media_control_layout = QHBoxLayout()
 
-        self.play_button = QPushButton("Play")
-        self.play_button.clicked.connect(self.sp.play)
-        layout.addWidget(self.play_button)
+        self.play_button = QPushButton()
+        self.play_button.setIcon(QIcon("assets/play-button.png"))
+        self.play_button.setIconSize(self.play_button.sizeHint()) 
+        self.play_button.setStyleSheet("background-color: transparent; border: none;")
+        self.play_button.clicked.connect(self.sp.play)  
+        media_control_layout.addWidget(self.play_button)
 
-        self.pause_button = QPushButton("Pause")
-        self.pause_button.clicked.connect(self.sp.pause)
-        layout.addWidget(self.pause_button)
-
+        layout.addLayout(media_control_layout)
         self.setLayout(layout)
 
         # Configure Timer and Start
