@@ -16,6 +16,7 @@ class SpotifyAPI:
 
     def refresh_token(self):
         """Refresh the access token if needed."""
+        print("Refreshing access token...")
         requests.get("http://localhost:8888/callback")
         self.access_token = os.getenv("ACCESS_TOKEN")
 
@@ -32,10 +33,10 @@ class SpotifyAPI:
             return track_name, artist_name, album_cover
         elif response.status_code == 401 and response.json():
             self.refresh_token()
-            return None, None, None
         else:
             print(response)
-        return "No song playing"
+            
+        return None,None,None
     
     def get_album_cover(self, url:str) -> QPixmap:
         """Fetch the album cover image."""
@@ -60,3 +61,23 @@ class SpotifyAPI:
         """Send pause request to Spotify."""
         headers = {"Authorization": f"Bearer {self.access_token}"}
         requests.put(f"{self.BASE_URL}/pause", headers=headers)
+        
+    def skip(self):
+        """Send skip request to Spotify."""
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+        requests.post(f"{self.BASE_URL}/next", headers=headers)
+        
+    def get_playback_state(self):
+        """Fetch the current playback state."""
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+        response = requests.get(f"{self.BASE_URL}", headers=headers)
+        
+        if response.status_code == 200:
+            data = response.json()
+            return data["is_playing"]
+        elif response.status_code == 401:
+            self.refresh_token()
+        else:
+            print(response)
+            
+        return False

@@ -19,7 +19,7 @@ def login():
     CLIENT_ID = os.getenv("CLIENT_ID")
     REDIRECT_URI = os.getenv("REDIRECT_URI")
 
-    AUTH_URL = f"https://accounts.spotify.com/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri={REDIRECT_URI}&scope=user-read-playback-state%20user-modify-playback-state"
+    AUTH_URL = f"https://accounts.spotify.com/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri={REDIRECT_URI}&scope=user-read-playback-state%20user-modify-playback-state%20user-read-currently-playing"
     print (AUTH_URL)
     return redirect(AUTH_URL)
 
